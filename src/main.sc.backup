@@ -1,0 +1,238 @@
+theme: /
+
+    state: newNode_0
+        a:  Привет! Это Турист_бот.
+            Бывает так - понимаешь, что нужно обновиться, поменять картинку, взять отпуск и... съездить в далекие страны!
+            Но потом понимаешь - и страшно и долго и далеко...
+            Тут я готов оказать тебе помощь!
+            Я узнаю погоду в нужном городе, оформлю заявку в туристическое агентство на тебя и твоих близких, узнаю расписание самолетов, поездов, гидов и гостиниц, выясню яркие достопримечательности.
+            Давай попробуем?
+            Жми начать!
+        go!: /newNode_1
+    @IntentGroup
+        {
+          "boundsTo" : "/newNode_0",
+          "actions" : [ {
+            "buttons" : [ {
+              "name" : "начать",
+              "transition" : "/newNode_2"
+            }, {
+              "name" : "я боюсь",
+              "transition" : "/newNode_6"
+            }, {
+              "name" : "нет времени",
+              "transition" : "/newNode_6"
+            } ],
+            "type" : "buttons"
+          } ],
+          "global" : false
+        }
+    state: newNode_1
+        state: 1
+            q: $AGREEMENT
+
+            go!: /newNode_2
+        init:
+            $jsapi.bind({
+                type: "postProcess",
+                path: "/newNode_1",
+                name: "newNode_1 buttons",
+                handler: function($context) {
+                  $reactions.buttons([
+                    {text: "начать"
+                    , transition: "/newNode_2"
+                    },
+                    {text: "я боюсь"
+                    , transition: "/newNode_6"
+                    },
+                    {text: "нет времени"
+                    , transition: "/newNode_6"
+                    },
+                  ]);
+                }
+            });
+
+    state: newNode_6
+        a:  Создание заявки в этой системе ни к чему тебя не обязывает...
+            Ты всегда можешь отменить или создать новую поездку!
+        buttons:
+            "Давай знакомиться"
+            "Узнать погоду в другом городе"
+            "Создать заявку"
+
+    state: newNode_2
+        a:  Давай знакомиться!
+            Напиши свое имя и фамилию!
+        go!: /newNode_7
+    @IntentGroup
+        {
+          "boundsTo" : "/newNode_2",
+          "actions" : [ {
+            "buttons" : [ ],
+            "type" : "buttons"
+          } ],
+          "global" : false
+        }
+    state: newNode_7
+        state: 1
+            e: Дина Калашникова
+
+            go!: /newNode_9
+
+        state: 2
+            e: Евгений Калашников
+
+            go!: /
+
+        state: Fallback
+            event: noMatch
+            go!: /newNode_8
+        init:
+            $jsapi.bind({
+                type: "postProcess",
+                path: "/newNode_7",
+                name: "newNode_7 buttons",
+                handler: function($context) {
+                }
+            });
+
+    state: newNode_4
+        a:  Вспомни страну в которой ты мечтал побывать!
+            И выбери дату отправления!
+        go!: /newNode_5
+    @IntentGroup
+        {
+          "boundsTo" : "/newNode_4",
+          "actions" : [ {
+            "buttons" : [ {
+              "name" : "узнать погоду на дату поездки",
+              "transition" : ""
+            } ],
+            "type" : "buttons"
+          } ],
+          "global" : true
+        }
+    state: newNode_5
+        state: 1
+            q!: $COUNTRY
+
+            go!: /newNode_11
+
+        state: 2
+            q!: $DATETIME
+
+            go!: /newNode_11
+        init:
+            $jsapi.bind({
+                type: "postProcess",
+                path: "/newNode_5",
+                name: "newNode_5 buttons",
+                handler: function($context) {
+                  $reactions.buttons([
+                    {text: "узнать погоду на дату поездки"
+                    },
+                  ]);
+                }
+            });
+
+    state: newNode_11
+        a: Погода в "стране" :
+        go!: /newNode_12
+
+    state: newNode_12
+        HttpRequest:
+            url = https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={896ef1a1f6354c633d80019896e8bfc4}
+            method = GET
+            body = {
+                "coord": {
+                "lon": 10.99,
+                "lat": 44.34
+                },
+                "weather": [
+                {
+                "id": 501,
+                "main": "Rain",
+                "description": "moderate rain",
+                "icon": "10d"
+                }
+                ],
+                "base": "stations",
+                "main": {
+                "temp": 298.48,
+                "feels_like": 298.74,
+                "temp_min": 297.56,
+                "temp_max": 300.05,
+                "pressure": 1015,
+                "humidity": 64,
+                "sea_level": 1015,
+                "grnd_level": 933
+                },
+                "visibility": 10000,
+                "wind": {
+                "speed": 0.62,
+                "deg": 349,
+                "gust": 1.18
+                },
+                "rain": {
+                "1h": 3.16
+                },
+                "clouds": {
+                "all": 100
+                },
+                "dt": 1661870592,
+                "sys": {
+                "type": 2,
+                "id": 2075663,
+                "country": "IT",
+                "sunrise": 1661834187,
+                "sunset": 1661882248
+                },
+                "timezone": 7200,
+                "id": 3163858,
+                "name": "Zocca",
+                "cod": 200
+                }
+            okState = /newNode_13
+            errorState = /newNode_14
+            timeout = 0
+            headers = []
+            vars = []
+
+    state: newNode_13
+        a: Температура прекрасная - можно ехать!
+
+    state: newNode_8
+        a: Не могу разобрать! Повтори пожалуйста!
+
+    state: newNode_9
+        a: Напиши свой номер телефона!
+        go!: /newNode_10
+    @IntentGroup
+        {
+          "boundsTo" : "/newNode_9",
+          "actions" : [ {
+            "buttons" : [ ],
+            "type" : "buttons"
+          } ],
+          "global" : false
+        }
+    state: newNode_10
+        state: 1
+            q: $PHONE
+
+            go!: /newNode_4
+
+        state: Fallback
+            event: noMatch
+            go!: /newNode_8
+        init:
+            $jsapi.bind({
+                type: "postProcess",
+                path: "/newNode_10",
+                name: "newNode_10 buttons",
+                handler: function($context) {
+                }
+            });
+
+    state: newNode_14
+        a: температура за границами умеренных значений - подтвердите свой выбор!

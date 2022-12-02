@@ -1,0 +1,283 @@
+{
+  "project" : {
+    "id" : "jast_tourist_bot-1000054690-qRt",
+    "name" : "jast_tourist_bot-1000054690-qRt",
+    "folder" : "/jaicp"
+  },
+  "settings" : {
+    "language" : "ru",
+    "spellingCorrection" : false,
+    "classificationAlgorithm" : "sts",
+    "timezone" : "UTC",
+    "extendedSettings" : {
+      "tokenizerEngine" : "mystem",
+      "allowedPatterns" : [ "agree", "disagree", "bad", "bot", "bye", "cannot", "clever", "compliment", "dontKnow", "gender", "good", "hello", "looser", "maybe", "me", "my", "need", "normal", "notNow", "now", "pls", "serviceHelperHuman", "stupid", "super", "sure", "thanks", "turnOff", "turnOn", "what", "why", "email", "smth", "obsceneWord", "continue", "shutUp", "stopGame", "stopGameStrong", "stopGameWeak", "Новая_сущность" ],
+      "useShared" : true,
+      "zflPatternsEnabled" : true
+    },
+    "shared" : false
+  },
+  "intents" : [ {
+    "path" : "/Новый интент",
+    "enabled" : true,
+    "shared" : false,
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "priority" : 0
+  }, {
+    "path" : "/newNode_7/1",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Дина Калашникова"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/newNode_7/2",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Евгений Калашников"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/Введи имя и фамилию",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Дина Калашникова"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "slots" : [ {
+      "name" : "Имя Фамилия",
+      "entity" : "Новая_сущность",
+      "required" : true,
+      "prompts" : [ "Введите имя и фамилию.", "Представьтесь", "Давайте знакомиться!" ],
+      "array" : true
+    } ],
+    "priority" : 0
+  }, {
+    "path" : "/Новый интент 1",
+    "enabled" : true,
+    "shared" : false,
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "priority" : 0
+  }, {
+    "path" : "/Создать заявку",
+    "answer" : "Ответьте на несколько вопросов и мы подберем Вам увлекательный тур\n",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "я готов сейчас создать заявку"
+    } ],
+    "classificationRules" : {
+      "refs" : [ {
+        "entityName" : "classRule_3461",
+        "predicate" : "CONTAINS"
+      }, {
+        "entityName" : "classRule_6668",
+        "predicate" : "CONTAINS"
+      } ]
+    },
+    "patterns" : [ ],
+    "slots" : [ {
+      "name" : "Имя",
+      "entity" : "mystem.persn",
+      "required" : true,
+      "prompts" : [ ],
+      "array" : true
+    }, {
+      "name" : "Фамилия",
+      "entity" : "mystem.famn",
+      "required" : true,
+      "prompts" : [ ],
+      "array" : true
+    }, {
+      "name" : "Город",
+      "entity" : "mystem.geo",
+      "required" : true,
+      "prompts" : [ ],
+      "array" : true
+    }, {
+      "name" : "Телефон",
+      "entity" : "duckling.number",
+      "required" : true,
+      "prompts" : [ ],
+      "array" : true
+    } ],
+    "priority" : 0
+  } ],
+  "entities" : [ {
+    "entity" : {
+      "name" : "classRule_3461",
+      "enabled" : true,
+      "shared" : false,
+      "type" : "annotation",
+      "priority" : 1,
+      "noSpelling" : false,
+      "noMorph" : false,
+      "phoneticSearch" : false,
+      "fuzzySearch" : false,
+      "client" : false,
+      "hidden" : true
+    },
+    "records" : [ {
+      "type" : "pattern",
+      "rule" : [ "создать заявку" ],
+      "value" : ""
+    } ]
+  }, {
+    "entity" : {
+      "name" : "Новая_сущность",
+      "enabled" : true,
+      "shared" : false,
+      "type" : "annotation",
+      "priority" : 1,
+      "noSpelling" : true,
+      "noMorph" : false,
+      "phoneticSearch" : false,
+      "fuzzySearch" : false,
+      "client" : false,
+      "hidden" : false
+    },
+    "records" : [ ]
+  }, {
+    "entity" : {
+      "name" : "classRule_6668",
+      "enabled" : true,
+      "shared" : false,
+      "type" : "annotation",
+      "priority" : 1,
+      "noSpelling" : false,
+      "noMorph" : false,
+      "phoneticSearch" : false,
+      "fuzzySearch" : false,
+      "client" : false,
+      "hidden" : true
+    },
+    "records" : [ {
+      "type" : "synonyms",
+      "rule" : [ "запрос", "получить", "заказ", "тур", "я", "готов", "сейчас" ],
+      "value" : ""
+    } ]
+  } ],
+  "enabledSystemEntities" : [ "mystem.geo", "mystem.persn", "mystem.obsc", "mystem.patrn", "mystem.famn", "pymorphy.romn", "pymorphy.latn", "pymorphy.numb", "pymorphy.intg", "pymorphy.abbr", "pymorphy.name", "pymorphy.surn", "pymorphy.patr", "pymorphy.geox", "pymorphy.orgn", "duckling.number", "duckling.ordinal", "duckling.amount-of-money", "duckling.distance", "duckling.time", "duckling.date", "duckling.time-of-day", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url", "mlps-obscene.obscene", "zb.datetime", "zb.number", "duckling.interval" ],
+  "spellerDictionary" : [ ],
+  "systemEntities" : [ {
+    "name" : "mystem.geo",
+    "enabled" : true
+  }, {
+    "name" : "mystem.persn",
+    "enabled" : true
+  }, {
+    "name" : "mystem.obsc",
+    "enabled" : true
+  }, {
+    "name" : "mystem.patrn",
+    "enabled" : true
+  }, {
+    "name" : "mystem.famn",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.romn",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.latn",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.numb",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.intg",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.abbr",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.name",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.surn",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.patr",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.geox",
+    "enabled" : true
+  }, {
+    "name" : "pymorphy.orgn",
+    "enabled" : true
+  }, {
+    "name" : "duckling.number",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.ordinal",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.amount-of-money",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.distance",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.time",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.date",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.time-of-day",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.duration",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.phone-number",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.email",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "duckling.url",
+    "version" : "v1",
+    "enabled" : true
+  }, {
+    "name" : "mlps-obscene.obscene",
+    "enabled" : true
+  }, {
+    "name" : "zb.datetime",
+    "enabled" : true
+  }, {
+    "name" : "zb.number",
+    "enabled" : true
+  }, {
+    "name" : "duckling.interval",
+    "version" : "v2",
+    "enabled" : true
+  } ]
+}
